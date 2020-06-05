@@ -1,0 +1,7 @@
+void *next(Iterator *it) { int ndim = it->shape.ndim;
+ if (ndim == 0) return it->data + it->typesize;
+ int i = ndim - 1; int *dims = it->shape.dims; ++it->curidx[i]; while (i > 0 && it->curidx[i] >= dims[i]) {  it->curidx[i] = 0;  ++(it->curidx[--i]);   } return it->data + getOffset(ndim, it->curidx, it->shape.strides) * it->typesize;}
+
+
+===================
+old ver
