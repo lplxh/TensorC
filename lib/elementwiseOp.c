@@ -5,6 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
+#include <complex.h>
 
 void computeStrideForBroadcast(Shape *a, Shape *b, Shape res) {
 	int dim = res.ndim, dimA = a->ndim, dimB = b->ndim;
@@ -1145,7 +1146,7 @@ Tensor EWSquare(Tensor *this) {
 		case DOUBLE_COMPLEX: {
 			double *data = (double *)ret.data;
 			for (double complex *ib = begin(&it), *ie = end(&it); ib != ie; ib = next(&it)) {
-				double real = creal(*ib), imag = cimag(*ib);
+				double real = creal(*ib), imag = cimag(*ib); //creal , cimag函数为double complex类型的自带的函数
 				*data++ = (*ib)*(*ib);;
 			}
 			break;

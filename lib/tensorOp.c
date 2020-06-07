@@ -37,56 +37,41 @@ Tensor outerproduct(Tensor*this,const Tensor other){
                }
                computeStride(shape);
                Tensor res = onesFromShape(type,*shape);
+               Iterator itA = getIterator(lhs),itB = getIterator(rhs);
                switch(type){
                                  case DOUBLE:{
-                                                  double *dataA=(double*)lhs.data,*dataB=(double*)rhs.data,*dataRes=(double*)res.data;
-                                                  for(int i = 0; i< lhs.shape.nelem ;++i){
-                                                             for(int j=0;j<rhs.shape.nelem;++j){
-                                                                         double tmp = *dataA*(*dataB);
-                                                                         dataB++;
-                                                                         *dataRes=tmp;
-                                                                         dataRes++;
+                                                  double *ibA=(double*)begin(&itA),*ibB=(double*)begin(&itB),*dataRes=(double*)res.data;
+                                                  for(int i = 0; i< lhs.shape.nelem ;++i,ibA = next(&itA),ibB = (double*)begin(&itB)){
+                                                             for(int j=0;j<rhs.shape.nelem;++j,ibB = next(&itB)){
+                                                                         *dataRes++ = (*ibA)*(*ibB);
                                                             }
-                                                            dataA++;
                                                   }
                                                   break;
                                 }
-                                 case FLOAT:{
-                                                  float *dataA=(float*)lhs.data,*dataB=(float*)rhs.data,*dataRes=(float*)res.data;
-                                                  for(int i = 0; i< lhs.shape.nelem ;++i){
-                                                             for(int j=0;j<rhs.shape.nelem;++j){
-                                                                         float tmp = *dataA*(*dataB);
-                                                                         dataB++;
-                                                                         *dataRes=tmp;
-                                                                         dataRes++;
+                                case FLOAT:{
+                                                  float *ibA=(float*)begin(&itA),*ibB=(float*)begin(&itB),*dataRes=(float*)res.data;
+                                                  for(int i = 0; i< lhs.shape.nelem ;++i,ibA = next(&itA),ibB = (float*)begin(&itB)){
+                                                             for(int j=0;j<rhs.shape.nelem;++j,ibB = next(&itB)){
+                                                                         *dataRes++ = (*ibA)*(*ibB);
                                                             }
-                                                            dataA++;
                                                   }
                                                   break;
                                 }
-                                 case INT:{
-                                                  int *dataA=(int*)lhs.data,*dataB=(int*)rhs.data,*dataRes=(int*)res.data;
-                                                  for(int i = 0; i< lhs.shape.nelem ;++i){
-                                                             for(int j=0;j<rhs.shape.nelem;++j){
-                                                                         int tmp = *dataA*(*dataB);
-                                                                         dataB++;
-                                                                         *dataRes=tmp;
-                                                                         dataRes++;
+                                case INT:{
+                                                  int *ibA=(int*)begin(&itA),*ibB=(int*)begin(&itB),*dataRes=(int*)res.data;
+                                                  for(int i = 0; i< lhs.shape.nelem ;++i,ibA = next(&itA),ibB = (int*)begin(&itB)){
+                                                             for(int j=0;j<rhs.shape.nelem;++j,ibB = next(&itB)){
+                                                                         *dataRes++ = (*ibA)*(*ibB);
                                                             }
-                                                            dataA++;
                                                   }
                                                   break;
                                 }
-                                  case DOUBLE_COMPLEX:{
-                                                  double complex  *dataA=(double complex*)lhs.data,*dataB=(double complex*)rhs.data,*dataRes=(double complex*)res.data;
-                                                  for(int i = 0; i< lhs.shape.nelem ;++i){
-                                                             for(int j=0;j<rhs.shape.nelem;++j){
-                                                                         double complex  tmp = *dataA*(*dataB);
-                                                                         dataB++;
-                                                                         *dataRes=tmp;
-                                                                         dataRes++;
+                            case DOUBLE_COMPLEX:{
+                                                  double complex*ibA=(double complex*)begin(&itA),*ibB=(double complex*)begin(&itB),*dataRes=(double complex*)res.data;
+                                                  for(int i = 0; i< lhs.shape.nelem ;++i,ibA = next(&itA),ibB = (double complex*)begin(&itB)){
+                                                             for(int j=0;j<rhs.shape.nelem;++j,ibB = next(&itB)){
+                                                                         *dataRes++ = (*ibA)*(*ibB);
                                                             }
-                                                            dataA++;
                                                   }
                                                   break;
                                 }

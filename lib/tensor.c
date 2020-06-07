@@ -37,22 +37,22 @@ Tensor fromdata(void*data, ScalarType type, int n,...) {
 	switch(type) {
 		case FLOAT: {
 			res.dtype = FLOAT;
-			res.data = data; 
+			memcpy(res.data,data,n*sizeof(float)); 
 			break;
 		}
 		case DOUBLE: {
 			res.dtype = DOUBLE;
-			res.data = data;
-			break;
+			memcpy(res.data,data,n*sizeof(double)); 
+                                                break;
 		}
 		case DOUBLE_COMPLEX: {
 			res.dtype = DOUBLE_COMPLEX;
-			res.data = data;
+			memcpy(res.data,data,n*sizeof(double complex)); 
 			break;
 		}
 		case INT: {
 			res.dtype = INT;
-			res.data = data;
+			memcpy(res.data,data,n*sizeof(int)); 
 			break;
 		}
 		default: {

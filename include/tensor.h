@@ -5,7 +5,7 @@
 #include "scalartype.h"
 #include <stdio.h>
 #include <stdint.h>
-
+#include <complex.h>
 
 typedef struct Tensor Tensor;
 struct Tensor {

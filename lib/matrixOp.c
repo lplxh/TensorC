@@ -143,4 +143,3 @@ Tensor pinv(Tensor *matrix) {
 	Tensor tmp = matmul(&v, tmps);
 	return matmul(&tmp, transpose(&u));
 }
-
