@@ -34,25 +34,30 @@ Tensor fromdata(void*data, ScalarType type, int n,...) {
 	res.shape = allocShapeFromValist(n, vl);
 	va_end(vl);
 	res.valid = true;
+                int nelem = res.shape.nelem;
 	switch(type) {
 		case FLOAT: {
 			res.dtype = FLOAT;
-			memcpy(res.data,data,n*sizeof(float)); 
+                                                res.data = malloc(nelem * sizeof(float));
+			memcpy(res.data,data,nelem*sizeof(float)); 
 			break;
 		}
 		case DOUBLE: {
 			res.dtype = DOUBLE;
-			memcpy(res.data,data,n*sizeof(double)); 
+                                                res.data = malloc(nelem * sizeof(double));
+			memcpy(res.data,data,nelem*sizeof(double)); 
                                                 break;
 		}
 		case DOUBLE_COMPLEX: {
 			res.dtype = DOUBLE_COMPLEX;
-			memcpy(res.data,data,n*sizeof(double complex)); 
+                                                res.data = malloc(nelem * sizeof(double complex));
+			memcpy(res.data,data,nelem*sizeof(double complex)); 
 			break;
 		}
 		case INT: {
 			res.dtype = INT;
-			memcpy(res.data,data,n*sizeof(int)); 
+                                                res.data = malloc(nelem * sizeof(int));
+			memcpy(res.data,data,nelem*sizeof(int)); 
 			break;
 		}
 		default: {
